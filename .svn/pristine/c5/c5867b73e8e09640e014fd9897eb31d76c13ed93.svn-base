@@ -1,0 +1,26 @@
+package service.rider.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.coverage.Prem_occ_charge;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class PremOccChargeData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	public void insertRateLayout(ArrayList<Prem_occ_charge> listPremOccCharge) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {listPremOccCharge}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RtePremOccCharge", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

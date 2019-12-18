@@ -1,0 +1,37 @@
+package service.product;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Formula;
+import layout.bean.productfac.product.Limit_cond;
+import layout.bean.productfac.product.Prem_collect;
+import layout.bean.productfac.product.Product;
+import layout.bean.productfac.product.Product_change;
+import layout.bean.productfac.product.Rate_layout;
+import layout.bean.productfac.product.Rider;
+import service.ctrl.ProductData;
+import service.product.ctrl.FormulaControlData;
+import service.product.ctrl.LimitCondControlData;
+import service.product.ctrl.PremCollectControlData;
+import service.product.ctrl.ProductChangeControlData;
+import service.product.ctrl.RateLayoutControlData;
+
+public class ProductGrantRightsInsure 
+{    
+	public void doProductChange(ArrayList<Product_change> listProductChange) throws Exception 
+	{
+		new ProductChangeControlData().insertProductChange(listProductChange);
+	}
+
+	public void doFormula(ArrayList<Formula> listFormula) throws Exception 
+	{
+		String [] formula_cat_id = new String [] {"5"};
+		new FormulaControlData().insertFormula(formula_cat_id,listFormula);
+	}
+	
+	   public void doRateLayout(ArrayList<Rate_layout> listRateLayout) throws Exception
+	   {
+		   String [] rate_cat_id = new String [] {"6"};
+		   new RateLayoutControlData().insertRateLayout(rate_cat_id, listRateLayout);
+	   }
+}

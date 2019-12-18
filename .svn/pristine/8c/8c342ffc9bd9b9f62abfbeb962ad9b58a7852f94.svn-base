@@ -1,0 +1,37 @@
+package service.product.ctrl;
+
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Underwrite;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnderwriteControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public Underwrite searchProductUnderwrite(String prd_code) throws Exception
+	{
+		
+		Object [] param = new Object [] {"VAL1",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnderwriteS", param);
+		ArrayList<Underwrite> list = ((ArrayList<Underwrite>)rteResult.searchValuesResultData().value()); 
+		return list.size() == 0 ? null : list.get(0) ;
+	}
+	
+	public void insertProductUndertrite(Underwrite underwrite ) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {underwrite}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnderwrite", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

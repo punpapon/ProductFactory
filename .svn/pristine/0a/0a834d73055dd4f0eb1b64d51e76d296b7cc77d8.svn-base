@@ -1,0 +1,54 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Limit_cond;
+import layout.bean.productfac.product.Limit_cond_amt;
+import layout.bean.productfac.product.Limit_cond_serie;
+import manit.rte.Result;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class LimitCondControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public void insertLimitCond(String prd_code,ArrayList<Limit_cond> listLimitCond) throws Exception
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {prd_code,listLimitCond}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductLimitCond", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+	//searchLimitCond
+	public  ArrayList<Limit_cond> searchLimitCond(String cov_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY1",cov_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteLimitCondS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Limit_cond>)result.value();
+	}
+	//searchLimitCondSerie
+	public  ArrayList<Limit_cond_serie> searchLimitCondSerie(String cov_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY2",cov_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteLimitCondS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Limit_cond_serie>)result.value();
+	}
+	//searchLimitCondAmt
+	public  ArrayList<Limit_cond_amt> searchLimitCondAmt(String cov_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY3",cov_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteLimitCondS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Limit_cond_amt>)result.value();
+	}		
+}

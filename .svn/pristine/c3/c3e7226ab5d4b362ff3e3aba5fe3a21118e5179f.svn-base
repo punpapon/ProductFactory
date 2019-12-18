@@ -1,0 +1,27 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Limit_cond_serie;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class LimitCondSerieControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public void insertLimitCond(ArrayList<Limit_cond_serie> listLimitCondSerie) throws Exception
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {listLimitCondSerie}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductLimitCondSerie", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

@@ -1,0 +1,35 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Unw_substd_type;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnwSubstdTypeControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Unw_substd_type> searchProductUnwSubstdType(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",prd_code};
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwSubstdTypeS", param);
+		return (ArrayList<Unw_substd_type>) rteResult.searchValuesResultData().value();
+	}
+	
+	public void insertProductUnwSubstdType(ArrayList<Unw_substd_type> listUnwSubstdType) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listUnwSubstdType}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwSubstdType", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

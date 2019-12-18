@@ -1,0 +1,21 @@
+
+.login-form-1 {
+  max-width: 400px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.logo {
+  padding: 15px 0;
+  font-size: 25px;
+  color: #aaaaaa;
+  font-weight: bold;
+}
+
+.login-button-submit {
+	width: 30%;
+}
+
+.margin0 {
+	margin: 0 0 0 0;
+}

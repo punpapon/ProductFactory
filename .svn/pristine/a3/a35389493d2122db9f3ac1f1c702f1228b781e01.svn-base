@@ -1,0 +1,35 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Sale_history;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class SaleHistoryControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Sale_history> searchProductSaleHistory(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductSaleHistoryS", param);
+		return (ArrayList<Sale_history>) rteResult.searchValuesResultData().value();
+	}
+	
+	public void insertProductsaleHistory(Sale_history sale_history) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {sale_history}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductSaleHistory", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

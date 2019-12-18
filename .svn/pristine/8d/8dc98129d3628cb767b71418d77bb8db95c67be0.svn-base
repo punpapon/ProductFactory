@@ -1,0 +1,22 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Product;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class ListProductBaseOLControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Product> searchListRider() throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",ConstantValues.PRD_CODE}; 
+		this.rteResult = new RteResult(RTE_PATH+"."+"RteSearchListProductBaseOL", param);
+		return (ArrayList<Product>) rteResult.searchValuesResultData().value();
+	}
+}

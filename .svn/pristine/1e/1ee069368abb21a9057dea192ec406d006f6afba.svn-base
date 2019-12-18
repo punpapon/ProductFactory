@@ -1,0 +1,34 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Sale_compensation;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class SaleCompensationControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	public void insertSalesCompensatio(ArrayList<Sale_compensation> listSaleCompensation) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listSaleCompensation}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteSalesCompensation", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+	
+	public ArrayList<Sale_compensation> searchProductChange(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductSaleCompensationS", param);
+		return (ArrayList<Sale_compensation>) rteResult.searchValuesResultData().value();
+	}
+}

@@ -1,0 +1,52 @@
+package service.rider.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.benefit.Benefit_cat;
+import manit.rte.Result;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+import service.fnc.StatusCodeType;
+
+public class BenefitCat
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+
+	public ArrayList<Benefit_cat> searchBenefitDisabilityAccessData() throws Exception
+	{
+		String rte = RTE_PATH + ".RteBenefitCatAccessData";
+		Object[] param = new Object[] { "ALL" };
+		this.rteResult = new RteResult(rte, param);
+		Result result = rteResult.searchValuesResultData();
+		ArrayList<Benefit_cat> listData = (ArrayList<Benefit_cat>) result.value();
+		if (listData.isEmpty())
+			throw new Exception(StatusCodeType.NF.getValue());
+		return listData;
+	}
+	
+	public ArrayList<Benefit_cat> searchBenefitByCovCatId() throws Exception
+	{
+		String rte = RTE_PATH+".lookup."+"RteSearchBenfit";
+		Object[] param = new Object[] {"VAL1",ConstantValues.COV_CAT_ID };
+		this.rteResult = new RteResult(rte, param);
+		Result result = rteResult.searchValuesResultData();
+		ArrayList<Benefit_cat> listData = (ArrayList<Benefit_cat>) result.value();
+		if (listData.isEmpty())
+			throw new Exception(StatusCodeType.NF.getValue());
+		return listData;
+	}
+
+	/*public void printData(ArrayList<Benefit_cat> listBenefitcat)
+	{
+		System.out.println("Benefit printData >>> ");
+		try {
+			for (Benefit_cat benefitCat : listBenefitcat) {
+				System.out.println(benefitCat.getBnf_cat_code() + " " + benefitCat.getName_th());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}*/
+}

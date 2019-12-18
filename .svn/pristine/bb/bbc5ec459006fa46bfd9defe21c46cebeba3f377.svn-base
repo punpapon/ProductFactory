@@ -1,0 +1,34 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Mode;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class ModeControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Mode> searchProductMode(String prd_code) throws Exception
+	{
+	    Object [] param = new Object [] {"VAL1", prd_code};
+	    this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductModeS",param);
+		return (ArrayList<Mode>) rteResult.searchValuesResultData().value();
+	}
+	
+	public void insertProductMode(ArrayList<Mode> listMode) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {listMode}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductMode", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

@@ -1,0 +1,26 @@
+package service.baseplan.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.coverage.Benefit_period_det;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class BenefitPeriodDetData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	public void insertBenefitPeriodDet(ArrayList<Benefit_period_det> listBenefitPeriodDet) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {listBenefitPeriodDet}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteBenefitPeriodDet", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

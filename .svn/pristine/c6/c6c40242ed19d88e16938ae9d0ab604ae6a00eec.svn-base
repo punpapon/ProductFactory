@@ -1,0 +1,35 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Unw_pol_issue_unit;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnwPolIssueUnitControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Unw_pol_issue_unit> searchProductUnwPolIssueUnit(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwPolIssueUnitS", param);
+		return (ArrayList<Unw_pol_issue_unit>) rteResult.searchValuesResultData().value();
+	}
+	
+	public void insertProductUnwPolIssueUnit(ArrayList<Unw_pol_issue_unit> listUnwUnwPolIssueUnit) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listUnwUnwPolIssueUnit}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwPolIssueUnit", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

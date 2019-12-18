@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="/c/tools/manit.jar"/>
+	<classpathentry kind="lib" path="/c/tools/Library/postgresql-9.4.1207.jre7.jar"/>
+	<classpathentry kind="lib" path="/c/java-json.jar"/>
+	<classpathentry kind="lib" path="/c/grouplife/jar/NewGrouplife/JSONObjectAdapter.jar"/>
+	<classpathentry kind="lib" path="/c/tools/myldap.jar"/>
+	<classpathentry kind="lib" path="/c/jar/search/search_personnel.jar"/>
+	<classpathentry kind="lib" path="/c/tools/AfcUtil.jar"/>
+	<classpathentry kind="lib" path="/c/tools/TLAlfresco.jar"/>
+	<classpathentry kind="lib" path="/c/utility/mail/mail.jar"/>
+	<classpathentry kind="lib" path="/c/utility/mail/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="/c/utility/mail/mailservice.jar"/>
+	<classpathentry kind="lib" path="/c/jar/utility/api/emailsend.jar"/>
+	<classpathentry kind="lib" path="/c/jar/common/common.jar"/>
+	<classpathentry kind="lib" path="/c/tools/Library/commons-email-1.4/commons-email-1.4.jar"/>
+	<classpathentry kind="lib" path="/c/jar/layout/layout_productfac.jar"/>
+	<classpathentry kind="lib" path="/c/tools/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/c/jar/app/app_insure.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-oracle">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/c/jar/dao/dao_productfac.jar"/>
+	<classpathentry kind="lib" path="/c/jar/utility/utility.jar"/>
+	<classpathentry kind="lib" path="/c/jar/bl/bl_productfac.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

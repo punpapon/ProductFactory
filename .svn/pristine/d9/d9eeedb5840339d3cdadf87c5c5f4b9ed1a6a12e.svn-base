@@ -1,0 +1,38 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Formula;
+import layout.bean.productfac.product.Prem_collect;
+import manit.rte.Result;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class FormulaControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public void insertFormula(String [] formula_cat_id ,ArrayList<Formula> listFormula) throws Exception
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,formula_cat_id,listFormula}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductFormula", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+	//seardchFormula
+	public  ArrayList<Formula> seardchFormula(String cov_code) throws Exception 
+    {
+		Object [] param = new Object [] {"KEY1",cov_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteFormulaS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Formula>)result.value();
+	}
+}

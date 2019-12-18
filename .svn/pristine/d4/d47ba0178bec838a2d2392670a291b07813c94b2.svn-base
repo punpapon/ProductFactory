@@ -1,0 +1,42 @@
+package service.baseplan.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.beanset.RateLayoutPremAccessData;
+import layout.bean.productfac.coverage.Prem_occ_charge;
+import layout.bean.productfac.coverage.Rate_layout;
+import manit.rte.Result;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class PremOccCharge {
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+    /**
+     * 
+     * @param prem_occ_charge
+     * @param str : is coverage.prem_occ_charge
+     * @return
+     * @throws Exception
+     */
+	public ArrayList<Prem_occ_charge> searchPrem_occ_charge(String cov_code)  throws Exception
+	{
+		Object [] param = new Object [] {"S",new Object [] {cov_code}};
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RtePremOccChargeS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Prem_occ_charge>) result.value();		
+	}
+	/*public void insertRateLayout(String [] rate_cat_id,ArrayList<Rate_layout> listRateLayout) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {listRateLayout,rate_cat_id}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteRateLayout", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}*/
+}

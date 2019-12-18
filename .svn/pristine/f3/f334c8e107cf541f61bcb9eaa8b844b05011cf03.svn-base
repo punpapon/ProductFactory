@@ -1,0 +1,69 @@
+package service.rider.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.benefit.Benefit;
+import layout.bean.productfac.coverage.Benefit_item;
+import manit.rte.Result;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+import service.fnc.StatusCodeType;
+
+public class EndorseRiderData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	/**
+	 * เลือรายการบันทึก สลักหลัง
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Benefit> searchBenefitRiderEndorse() throws Exception
+	{
+		String rte = RTE_PATH+".imp.RteBenefitS";
+		Object [] param = new Object [] {"VAL2"};
+		this.rteResult = new RteResult(rte, param);
+		Result result = rteResult.searchValuesResultData();
+		ArrayList<Benefit> listData = (ArrayList<Benefit>) result.value();
+		if(listData.isEmpty())
+			throw new Exception(StatusCodeType.NF.getValue());
+		return listData;
+	}
+	/**
+	 * 
+	 * @param cov_code
+	 * @return ArrayList : (0) = coverage.benefit_item,(1)...(n) = benefit.benefit
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList searchBenefitItemEndorse(String cov_code) throws Exception
+	{
+		String rte = RTE_PATH+".imp.RteBenefitItemEndorseS";
+		Object [] param = new Object [] {"VAL1",cov_code};
+		this.rteResult = new RteResult(rte, param);
+		Result result = rteResult.searchValuesResultData();
+		ArrayList listData = (ArrayList<Benefit>) result.value();
+//		if(listData.isEmpty())
+//			throw new Exception(StatusCodeType.NF.getValue());
+		return listData;
+	}
+	
+	/**
+	 * Endorse of Rider 
+	 * @param BenefitItem ,listBenefitItem
+	 * @throws Exception
+	 */
+	public void insertEndorseRider(Benefit_item benefitItem,ArrayList<Benefit_item> listBenefitItem) throws Exception
+	{
+		String rte = RTE_PATH+".imp.RteBenefitRiderEndorse";
+		Object [] param = new Object [] {benefitItem,listBenefitItem};
+		this.rteResult = new RteResult(rte, param);
+		Result result = rteResult.saveValuesResultData();
+		if(result.status() > 0)
+			throw new Exception((String)result.value());
+		if(result.status()  < 0)
+			throw (Exception)result.value();
+	}
+}

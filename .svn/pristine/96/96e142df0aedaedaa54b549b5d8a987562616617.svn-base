@@ -1,0 +1,86 @@
+package service.fnc;
+
+import manit.rte.Result;
+import utility.rteutility.PublicRte;
+import utility.support.DateInfo;
+
+public class RteResult 
+{
+	protected final String RTE_PATH = RtePath.RTE.getValue();
+	private final boolean REMOTE_RUN = true;
+	private final String  BL_SERVER  = "blcunderwrite";
+	private String rte;
+	private Object param;
+	
+	public RteResult() {}
+	public RteResult(String rte,Object param) throws Exception
+	{
+		this.rte = rte;
+		this.param = param;
+	}
+	protected void setVal(String rte,Object [] param)
+	{
+		this.rte = rte;
+		this.param = param;
+	}
+    public Result searchValuesResultData() throws Exception 
+	{
+		return  executeResult();
+	}
+    
+    public Result saveValuesResultData() throws Exception 
+   	{
+   		return executeResult();
+   	}
+    
+    public void saveData() throws Exception 
+	{
+    	executeResult();
+	}
+    
+    public Result executeResult() throws Exception
+    {
+    	try {
+    		System.out.println("start Time "+BL_SERVER+" "+rte+" "+DateInfo.sysDate()+":"+DateInfo.sysTime(0));
+    		PublicRte.setRemote(REMOTE_RUN);
+    		Result result = PublicRte.getResult(BL_SERVER, rte,	param);
+			int status = result.status();
+			System.out.println("End Time "+BL_SERVER+" "+rte+" "+DateInfo.sysDate()+":"+DateInfo.sysTime(0));
+			System.out.println("result status "+status);
+			if(status == 0)
+				return result;
+			else if(status == -1)
+				throw (Exception) result.value();/* throw new Exception((String)result.value());*/				
+			else 
+				throw new Exception((String)result.value());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    }
+    
+    
+    protected void saveDataResultStatus() throws Exception
+	{
+		boolean status = true;
+		try {
+			status = (boolean) executeResult().value();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status" + status);
+	}
+	
+    protected void saveDataResult() throws Exception
+	{
+		boolean status = true;
+		try {
+			saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status" + status);
+	}
+}

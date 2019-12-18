@@ -1,0 +1,49 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Participant;
+import manit.rte.Result;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class ParticipantControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	public  ArrayList<Participant> searchParticipant(String cov_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY",new String[] {cov_code}}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductParticipantS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Participant>)result.value();
+	}
+	/**
+	 * เรียงตาม prd_rider_code
+	 * @param prd_rider_code
+	 * @return
+	 * @throws Exception
+	 */
+	public  ArrayList<Participant> searchParticipant(String[] prd_rider_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY2",ConstantValues.PRD_CODE,prd_rider_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductParticipantS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Participant>)result.value();
+	}
+	
+	public void insertParticipant(ArrayList<Participant> listParticipant) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listParticipant}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductParticipant", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

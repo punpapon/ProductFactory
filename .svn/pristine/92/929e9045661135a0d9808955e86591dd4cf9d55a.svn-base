@@ -1,0 +1,33 @@
+package service.rider.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.coverage.Cov_terminate;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class CovTerminateControlData
+{
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Cov_terminate> searchCovTerminate(int bnf_item_id) throws Exception
+	{
+		String rte = RTE_PATH+".coverage.RteSearchCovTerminate";
+		Object [] param = new Object [] {"VAL1",bnf_item_id,ConstantValues.COV_CODE};
+		return (ArrayList<Cov_terminate>)new RteResult(rte, param).searchValuesResultData().value();
+	}
+	
+	public void insertCovTerminate(Cov_terminate cov_terminate) throws Exception
+	{
+		boolean status = false;
+		try {
+			String rte = RTE_PATH+".coverage.RteCovTerminate";
+			Object [] param = new Object [] {"VAL1",cov_terminate};
+			status = (boolean) new RteResult(rte, param).searchValuesResultData().value();			
+		} catch (Exception e) {
+			throw e;
+		}
+		System.out.println("status "+status);
+	}
+}

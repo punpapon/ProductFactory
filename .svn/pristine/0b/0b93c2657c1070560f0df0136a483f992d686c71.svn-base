@@ -1,0 +1,46 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+
+import layout.bean.productfac.product.Sale_compensation_serie;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+import utility.rteutility.PublicRte;
+
+public class SaleCompensationSerieControlData extends RteResult
+{
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Sale_compensation_serie> searchByPrdCode() throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",ConstantValues.PRD_CODE}; 
+		String rte = RTE_PATH+".product."+"RteSearchSaleCompensationSerie";
+		setVal(rte, param);
+		return (ArrayList<Sale_compensation_serie>)searchValuesResultData().value();
+	}
+	
+	public ArrayList<String[]> searchSalesBenefits() throws Exception
+	{
+		Object [] param = new Object [] {"VAL2",ConstantValues.PRD_CODE}; 
+		String rte = RTE_PATH+".product."+"RteSearchSaleCompensationSerie";
+		setVal(rte, param);
+		return (ArrayList<String[]>)searchValuesResultData().value();
+	}
+	
+	public void insertSaleCompensationSerie(ArrayList<Sale_compensation_serie> listData) throws Exception
+	{
+		boolean status = false;
+		try {
+			Object [] param = new Object [] {"VAL1",ConstantValues.PRD_CODE,listData}; 
+			String rte = RTE_PATH+".product."+"RteSaleCompensationSerie";
+			setVal(rte, param);
+			status = (boolean) executeResult().value();
+		} catch (Exception e) {
+			throw e;
+		}
+		System.out.println("status "+status);
+	}
+}

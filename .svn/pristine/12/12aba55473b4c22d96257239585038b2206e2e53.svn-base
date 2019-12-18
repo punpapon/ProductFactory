@@ -1,0 +1,34 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Unw_hist_med_sum;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnwHistMedSumControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Unw_hist_med_sum> searchProductUnwHistMedSum(String prd_code) throws Exception
+	{
+		//TODO
+		return null;
+	}
+	
+	public void insertProductUnwHistMedSum(ArrayList<Unw_hist_med_sum> listUnwHistMedSum) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listUnwHistMedSum}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwHistMedSum", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

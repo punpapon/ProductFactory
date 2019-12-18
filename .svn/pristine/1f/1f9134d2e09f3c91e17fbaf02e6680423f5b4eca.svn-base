@@ -1,0 +1,34 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.product.Unw_hist_exist_prod;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnwHistExistProdControlData 
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Unw_hist_exist_prod> searchProductUnwHistExistProd(String prd_code) throws Exception
+	{
+		//TODO
+		return null;
+	}
+	
+	public void insertProductUnwHistExistProd(ArrayList<Unw_hist_exist_prod> listUnwHistExistProd) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {ConstantValues.PRD_CODE,listUnwHistExistProd}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductUnwHistExistProd", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

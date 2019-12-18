@@ -1,0 +1,33 @@
+package service;
+import java.awt.Desktop;
+import java.net.URI;
+//import java.net.URISyntaxExaception;
+import java.util.Base64;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import manit.M;
+
+public class BEnzTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Desktop d = Desktop.getDesktop();
+		try {
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				System.out.println("-------------Befor/"+cal.getTimeInMillis());	
+				
+				String originalURL = "POS|poj1|22316157|RE|25600110";
+				String encodedUrl = Base64.getUrlEncoder().encodeToString(originalURL.getBytes());
+				d.browse(new URI("http://10.102.63.32:8280/alfresco/s/thailife/main?param=+"+encodedUrl+"+"));
+				
+				Calendar cal2 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				System.out.println("-------------After/"+cal2.getTimeInMillis());
+			
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+	}
+
+}

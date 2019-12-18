@@ -1,0 +1,204 @@
+package service.center;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.beanset.FilingChannelAccessData;
+import layout.bean.productfac.beanset.PremAssumpRateGroupAccessData;
+import layout.bean.productfac.beanset.RateCatAccessData;
+import service.baseplan.ctrl.AgeBandData;
+import service.rider.ctrl.BenefitCat;
+import service.rider.ctrl.EndorseRiderData;
+import service.baseplan.ctrl.BenefitDisability;
+import service.baseplan.ctrl.FilingChannelData;
+import service.baseplan.ctrl.FormulaData;
+import service.baseplan.ctrl.MortalityTliiData;
+import service.baseplan.ctrl.RateCatData;
+import service.baseplan.ctrl.TpdTliData;
+import service.ctrl.PolicyWordingControlData;
+import service.ctrl.PremAssumpRateControlData;
+
+public class MainInsureDetailCreateOL extends CoverageLookupDetail
+{
+	private int doTab;
+	private ArrayList<PremAssumpRateGroupAccessData> listPremAssumpRateGroup;
+
+	public void createDetail(int tab) throws Exception
+	{
+		setDoTab(tab);
+		switch (tab)
+		{
+			case 1:	setBasicInfo();
+				break;
+			case 2:	setPolicyWording();
+				break;
+			case 3: setNonForfeiture();
+				break;
+			case 4:	setCalculatePremium();
+				break;
+			case 5: setPolicyValue();
+				break;
+			case 6:	setBenefits();
+				break;
+			case 7: setEndorse();
+				break;
+			default: break;
+		}
+	}
+
+	public int getDoTab()
+	{
+		return doTab;
+	}
+
+	public void setDoTab(int doTab)
+	{
+		this.doTab = doTab;
+	}
+
+	private void setBasicInfo() throws Exception
+	{
+		searchLookupCat();
+		setRateCatData(new String[] { "24", "25" });
+		setFilingChannelData();
+		setMortalityTlii();
+		setTpdTli();
+		setLookupPremAssumRate();
+	}
+
+	private void setPolicyWording() throws Exception
+	{
+		searchPolicyWording();
+	}
+
+	private void setNonForfeiture() throws Exception
+	{
+		// searchLookupCat();
+		// searchFomula();
+
+	}
+
+	private void setCalculatePremium() throws Exception
+	{
+		searchAgeBand();
+		setRateCatData(new String[] { "26", "28", "29", "30", "31", "32", "41", "43", "45" });
+		setRateCatAgebandPMStandard(new String[] { "27", "40", "42", "44" });
+	}
+
+	private void setRateCatAgebandPMStandard(String[] str) throws Exception
+	{
+		super.setListRateCatAgeBandPMStandard(searchRateCatAccessData(str));
+	}
+
+	private void setPolicyValue() throws Exception
+	{
+		searchAgeBand();
+		setRateCatData(new String[] { "33", "35", "46" });
+		setRateCatAgebandRiskStandard(new String[] { "34", "47" });
+	}
+
+	private void setRateCatAgebandRiskStandard(String[] str) throws Exception
+	{
+		super.setListRateCatAgeBandRiskStandard(searchRateCatAccessData(str));
+	}
+
+	private void searchLookupCat() throws Exception
+	{
+		super.setListLookupCatAccessData(new LookupCatData().searchLookupCat());
+	}
+
+	/**
+	 * Search for BasicInfo
+	 */
+	private void setRateCatData(String[] str) throws Exception
+	{
+		super.setListRateCatAccessData(searchRateCatAccessData(str));
+	}
+
+	private ArrayList<RateCatAccessData> searchRateCatAccessData(String[] str) throws Exception
+	{
+		return new RateCatData().searchInsuranceType(str);
+	}
+
+	private void setFilingChannelData() throws Exception
+	{
+		ArrayList<FilingChannelAccessData> listFilingChannelAccessData = new FilingChannelData().searchInsuranceType();
+		super.setListFilingChannelAccessData(listFilingChannelAccessData);
+	}
+
+	/**
+	 * lookup.lookup_cat.lookup_cat_id = 100 : ตารางที่ใช้ในการคำนวณเบี้ย
+	 * lookup.rate_layout.rate_cat_id between 18 and 23
+	 * 
+	 * @throws Exception
+	 */
+	private void setLookupPremAssumRate() throws Exception
+	{
+		PremAssumpRateControlData assumpRateControlData = new PremAssumpRateControlData();
+		setListPremAssumpRateGroup(assumpRateControlData.searchLookupPremAssumpRateGroup());
+	}
+
+	public ArrayList<PremAssumpRateGroupAccessData> getListPremAssumpRateGroup()
+	{
+		return listPremAssumpRateGroup;
+	}
+
+	public void setListPremAssumpRateGroup(ArrayList<PremAssumpRateGroupAccessData> listPremAssumpRateGroup)
+	{
+		this.listPremAssumpRateGroup = listPremAssumpRateGroup;
+	}
+
+	private void setMortalityTlii() throws Exception
+	{
+		super.setListMortalityTli(new MortalityTliiData().searchBenefitDisabilityAccessData());
+	}
+
+	private void setTpdTli() throws Exception
+	{
+		super.setListTpdTiliAccessData(new TpdTliData().searchBenefitDisabilityAccessData());
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------------------
+	private void searchPolicyWording() throws Exception
+	{
+		super.setListPolicyWordingAccessData(new PolicyWordingControlData().searchlookupPolicyWordingByCovCode());
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------------
+	private void searchAgeBand() throws Exception
+	{
+		super.setListAgeBandAccessData(new AgeBandData().searchAgeBandAccessData());
+	}
+
+	private void setBenefits() throws Exception
+	{
+		searchBenefitDisability();
+		searchBenefit_Cat();
+		searchFomula();
+		searchLookupCat();
+	}
+
+	private void setEndorse() throws Exception
+	{
+		super.setListBenefit(new EndorseRiderData().searchBenefitRiderEndorse());
+	}
+
+	// searchBenefitDisability
+	// -------------------------------------------------------------------------------------------------------
+	private void searchBenefitDisability() throws Exception
+	{
+		super.setListBenefit(new BenefitDisability().searchBenefitDisabilityAccessData());
+	}
+
+	// searchBenefit_Cat
+	// -------------------------------------------------------------------------------------------------------
+	private void searchBenefit_Cat() throws Exception
+	{
+		super.setListBenefitCat(new BenefitCat().searchBenefitDisabilityAccessData());
+	}
+
+	///////////////////////////////////////////////
+	public void searchFomula() throws Exception
+	{
+		super.setlookupFormula(new FormulaData().searchFormulaOL());
+	}
+}

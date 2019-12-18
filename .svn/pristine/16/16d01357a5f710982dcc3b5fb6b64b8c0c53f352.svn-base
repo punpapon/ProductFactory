@@ -1,0 +1,91 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.coverage.Prem_assump_rate;
+import layout.bean.productfac.product.Product;
+import layout.bean.productfac.product.Rider;
+import manit.rte.Result;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class ProductControlData {
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	public  ArrayList<Product> searchProduct(String  prd_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Product>)result.value();
+	}
+	public  ArrayList<Rider> searchProductRider(String prd_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY",new String[] {prd_code}}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductRiderS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Rider>)result.value();
+	}
+	
+	public  ArrayList<Rider> searchProductRider_Participant(String prd_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY3",new String[] {prd_code}}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductRiderS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Rider>)result.value();
+	}
+	
+	
+	public  ArrayList<Product> searchRidercode(String ridercode) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY2",ridercode}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Product>)result.value();
+	}
+	
+	public ArrayList<String[]> searchProductData(String[] prd_rider_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY3",prd_rider_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<String[]>)result.value();
+	}
+	/**
+	 * Support for Coverage Rider
+	 * @param prd_code
+	 * @return
+	 * @throws Exception
+	 */
+	public  ArrayList<Product> searchProductByCovCode(String  cov_code) throws Exception 
+	{
+		Object [] param = new Object [] {"KEY4",cov_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductS", param);
+		Result result = rteResult.searchValuesResultData();
+		return (ArrayList<Product>)result.value();
+	}
+	//insertProductRider (PB) Benz 07-10-2019
+	public void insertProductRider(ArrayList<Rider> listProductRider) throws Exception
+	{
+		try {
+			Object [] param = new Object [] {listProductRider};
+			String rte      = RTE_PATH+".imp.RteProductRider";
+			new RteResult(rte,param).saveData();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	//search product.rider by prd_rider_code
+	public ArrayList<Rider> searchProductRiderByPrdCode(String prd_rider_code ) throws Exception
+	{
+		try {
+			Object [] param = new Object [] {"KEY2",new String[] {ConstantValues.PRD_CODE,prd_rider_code}}; 
+			this.rteResult = new RteResult(RTE_PATH+".imp."+"RteProductRiderS", param);
+			Result result = rteResult.searchValuesResultData();
+			return (ArrayList<Rider>)result.value();
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+}

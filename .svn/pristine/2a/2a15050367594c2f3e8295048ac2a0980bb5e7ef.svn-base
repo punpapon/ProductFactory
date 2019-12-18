@@ -1,0 +1,57 @@
+package service.product.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.beanset.ProductExcludedAccessData;
+import layout.bean.productfac.product.Unw_accum_rule_exclude;
+import service.fnc.ConstantValues;
+import service.fnc.RtePath;
+import service.fnc.RteResult;
+
+public class UnwAccumRuleExcludeControlData
+{
+	private RteResult rteResult;
+	private final String RTE_PATH = RtePath.RTE.getValue();
+	
+	public ArrayList<Unw_accum_rule_exclude> searchUnwAccumRuleExclude(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL1",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".product."+"RteSearchUnwAccumRuleExclude", param);
+		return (ArrayList<Unw_accum_rule_exclude>) rteResult.searchValuesResultData().value();
+	}
+	
+	public ArrayList<ProductExcludedAccessData>  searchProductExclude(String prd_code) throws Exception
+	{
+		Object [] param = new Object [] {"VAL2",prd_code}; 
+		this.rteResult = new RteResult(RTE_PATH+".product."+"RteSearchUnwAccumRuleExclude", param);
+		return (ArrayList<ProductExcludedAccessData>) rteResult.searchValuesResultData().value();
+	}
+	
+	public void insertUnwAccumRuleExclude(ArrayList<Unw_accum_rule_exclude> listUnwAccumRuleExclude,String accum_type) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {"VAL1",ConstantValues.PRD_CODE,accum_type,listUnwAccumRuleExclude}; 
+			this.rteResult = new RteResult(RTE_PATH+".product."+"RteUnwAccumRuleExclude", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+	//Benz 04-10-2019 save BP
+	public void insertUnwAccumRuleExcludePB(ArrayList<Unw_accum_rule_exclude> listUnwAccumRuleExclude) throws Exception 
+	{
+		boolean status = true;
+		try {
+			Object [] param = new Object [] {"VAL2",ConstantValues.PRD_CODE,listUnwAccumRuleExclude};
+			this.rteResult = new RteResult(RTE_PATH+".product."+"RteUnwAccumRuleExclude", param);
+			rteResult.saveData();
+		} catch (Exception e) {
+			status = false;
+			throw e;
+		}
+		System.out.println("status >>> "+status);
+	}
+}

@@ -1,0 +1,100 @@
+package service.baseplan.ctrl;
+
+import java.util.ArrayList;
+
+import layout.bean.productfac.beanset.RateLayoutPremAccessData;
+import layout.bean.productfac.coverage.Rate_layout;
+import layout.bean.productfac.lookup.File;
+import layout.bean.productfac.lookup.Sub_cat;
+import service.fnc.ConstantValues;
+import service.fnc.RteResult;
+
+public class RateLayoutData extends RteResult
+{
+	/**
+	 * 
+	 * @param cov_code
+	 * @param str
+	 *            : is lookup.rate_cat.rate_cat_id
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<RateLayoutPremAccessData> searchCoverageRateLayout(String cov_code, String[] rate_cat_id)
+			throws Exception
+	{
+		setVal(RTE_PATH + ".RteRateLayoutAccessData", new Object[] { "VAL1", new Object[] { cov_code, rate_cat_id } });
+		return (ArrayList<RateLayoutPremAccessData>) searchValuesResultData().value();
+	}
+
+	/**
+	 * 
+	 * @param cov_code
+	 * @return ArrayList<RateLayoutPremAccessData> : RateLayoutPremAccessData
+	 * @throws Exception
+	 */
+	public ArrayList<RateLayoutPremAccessData> searchRateLayoutByCovCode(String[] cov_code, String[] rate_cat_id)
+			throws Exception
+	{
+		setVal(RTE_PATH + ".RteRateLayoutAccessData", new Object[] { "VAL2", cov_code, rate_cat_id });
+		return (ArrayList<RateLayoutPremAccessData>) searchValuesResultData().value();
+	}
+
+	// search lookup.rate_layout
+	public ArrayList<Sub_cat> searchRate_layout(String rider_cat_id, String rate_laout_id) throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL3", rider_cat_id, rate_laout_id });
+		return (ArrayList<Sub_cat>) searchValuesResultData().value();
+	}
+
+	// search lookup.File
+	public ArrayList<File> searchFile(String file) throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL4", file });
+		return (ArrayList<File>) searchValuesResultData().value();
+	}
+
+	/**
+	 * Search Data lookup.ratelayout
+	 * 
+	 * @param rate_cat_id,sub_cat_id)
+	 * @return
+	 * @throws Exception
+	 */
+	public layout.bean.productfac.lookup.Rate_layout searchRateLayout(String rate_cat_id, String sub_cat_id,
+			String file_pattern) throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL1", rate_cat_id, sub_cat_id, file_pattern });
+		ArrayList<layout.bean.productfac.lookup.Rate_layout> listRateLayout = (ArrayList<layout.bean.productfac.lookup.Rate_layout>) searchValuesResultData().value();
+		if (listRateLayout.isEmpty())
+			throw new Exception("Data not found Search lookup.ratelayout By rate_cat_id,sub_cat_id " + rate_cat_id + ","+ sub_cat_id);
+		return listRateLayout.get(0);
+	}
+
+	public ArrayList<layout.bean.productfac.lookup.Rate_layout> searchFileNamePattern(String cov_code,
+			String[] rate_cat_id) throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL2", cov_code, rate_cat_id });
+		ArrayList<layout.bean.productfac.lookup.Rate_layout> listRateLayout = (ArrayList<layout.bean.productfac.lookup.Rate_layout>) searchValuesResultData().value();
+		if (listRateLayout.isEmpty())
+			throw new Exception("Data not found searchFileNamePattern By cov_code,rate_layout_id " + cov_code + "," + rate_cat_id);
+		return listRateLayout;
+	}
+
+	public ArrayList<String[]> searchSubCat(String[] rate_cat_id) throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL5", rate_cat_id });
+		return (ArrayList<String[]>) searchValuesResultData().value();
+	}
+
+	public ArrayList<layout.bean.productfac.lookup.Rate_layout> searchRateLayoutVal6(int rate_cat_id, int sub_cat_id)	throws Exception
+	{
+		setVal(RTE_PATH + ".lookup." + "RteSearchRateLayout", new Object[] { "VAL6", rate_cat_id, sub_cat_id });
+		return (ArrayList<layout.bean.productfac.lookup.Rate_layout>) searchValuesResultData().value();
+	}
+
+	public void insertRateLayout(String[] rate_cat_id, ArrayList<Rate_layout> listRateLayout) throws Exception
+	{
+		setVal(RTE_PATH + ".imp." + "RteRateLayout",new Object[] { ConstantValues.COV_CODE, rate_cat_id, listRateLayout });
+		saveDataResult();
+	}
+}
